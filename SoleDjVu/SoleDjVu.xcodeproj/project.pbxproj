@@ -25,7 +25,6 @@
 		8ED6D980156D18FA009673D0 /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ED6D97E156D18FA009673D0 /* libjpeg.a */; };
 		8ED6D992156D1912009673D0 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ED6D982156D1912009673D0 /* libtiff.a */; };
 		8ED6D9CA156D1929009673D0 /* libdjvu.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ED6D9C1156D1928009673D0 /* libdjvu.a */; };
-		8EDC332815763EAB00579FB9 /* About SoleDjVu.djvu in Resources */ = {isa = PBXBuildFile; fileRef = 8EDC332715763EAB00579FB9 /* About SoleDjVu.djvu */; };
 		8EDC333115763FE900579FB9 /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = 8EDC332F15763FE900579FB9 /* COPYING */; };
 		8EDC333215763FE900579FB9 /* COPYRIGHT in Resources */ = {isa = PBXBuildFile; fileRef = 8EDC333015763FE900579FB9 /* COPYRIGHT */; };
 		8EE95A00156EA02400D2EA15 /* DjvuGlue.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EE959FF156EA02400D2EA15 /* DjvuGlue.mm */; };
@@ -40,7 +39,6 @@
 		8EA120E9154D76DA00F80BA4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8EA120EB154D76DA00F80BA4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8EA120ED154D76DA00F80BA4 /* SoleDjVu-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SoleDjVu-Prefix.pch"; sourceTree = "<group>"; };
-		8EA121F5154D79E900F80BA4 /* Glue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Glue.h; sourceTree = "<group>"; };
 		8EA121F6154D79E900F80BA4 /* Glue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Glue.m; sourceTree = "<group>"; };
 		8EA121F8154D79E900F80BA4 /* ffi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ffi.c; sourceTree = "<group>"; };
 		8EA121F9154D79E900F80BA4 /* ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffi.h; sourceTree = "<group>"; };
@@ -146,7 +144,6 @@
 		8ED6D9C7156D1928009673D0 /* XMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLParser.h; sourceTree = "<group>"; };
 		8ED6D9C8156D1928009673D0 /* XMLTags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLTags.h; sourceTree = "<group>"; };
 		8ED6D9C9156D1928009673D0 /* ZPCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZPCodec.h; sourceTree = "<group>"; };
-		8EDC332715763EAB00579FB9 /* About SoleDjVu.djvu */ = {isa = PBXFileReference; lastKnownFileType = file; path = "About SoleDjVu.djvu"; sourceTree = "<group>"; };
 		8EDC332F15763FE900579FB9 /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
 		8EDC333015763FE900579FB9 /* COPYRIGHT */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYRIGHT; sourceTree = "<group>"; };
 		8EE959FF156EA02400D2EA15 /* DjvuGlue.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DjvuGlue.mm; sourceTree = "<group>"; };
@@ -211,7 +208,6 @@
 				8ED6D981156D1912009673D0 /* libtiff */,
 				8ED6D970156D18FA009673D0 /* libjpeg */,
 				8ED6D966156D18EB009673D0 /* libpng */,
-				8EA121F5154D79E900F80BA4 /* Glue.h */,
 				8EA121F6154D79E900F80BA4 /* Glue.m */,
 				8EA121F7154D79E900F80BA4 /* libffi */,
 				8EA1252C154D79E900F80BA4 /* Nu.h */,
@@ -231,7 +227,6 @@
 			children = (
 				8EDC332F15763FE900579FB9 /* COPYING */,
 				8EDC333015763FE900579FB9 /* COPYRIGHT */,
-				8EDC332715763EAB00579FB9 /* About SoleDjVu.djvu */,
 				8EA120E7154D76DA00F80BA4 /* SoleDjVu-Info.plist */,
 				8EA120E8154D76DA00F80BA4 /* InfoPlist.strings */,
 				8EA120ED154D76DA00F80BA4 /* SoleDjVu-Prefix.pch */,
@@ -422,7 +417,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8EA120EA154D76DA00F80BA4 /* InfoPlist.strings in Resources */,
-				8EDC332815763EAB00579FB9 /* About SoleDjVu.djvu in Resources */,
 				8EDC333115763FE900579FB9 /* COPYING in Resources */,
 				8EDC333215763FE900579FB9 /* COPYRIGHT in Resources */,
 			);
@@ -515,27 +509,19 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nu/SoleDjVu-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/Nu/libmagick\"",
-					"\"$(SRCROOT)/Nu/libfftw\"",
-					"\"$(SRCROOT)/Nu/Chipmunk/include/chipmunk\"",
 				);
 				INFOPLIST_FILE = "Nu/SoleDjVu-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Nu/ad/GoogleAdMobAdsSdkiOS-6.0.1\"",
-					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/Nu/ChipmunkPro-iPhone-Trial\"",
-					"\"$(SRCROOT)/Nu/libfftw\"",
-					"\"$(SRCROOT)/Nu/libmagick\"",
-					"\"$(SRCROOT)/Nu/libpng\"",
-					"\"$(SRCROOT)/Nu/libjpeg\"",
-					"\"$(SRCROOT)/Nu/libtiff\"",
-					"\"$(SRCROOT)/Nu/libdjvu\"",
+					"\"$(SRCROOT)/../png/libpng\"",
+					"\"$(SRCROOT)/../jpeg/libjpeg\"",
+					"\"$(SRCROOT)/../tiff/libtiff\"",
+					"\"$(SRCROOT)/../djvu/libdjvu\"",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = SoleDjVu;
-				SUPPORTED_PLATFORMS = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -548,27 +534,19 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nu/SoleDjVu-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/Nu/libmagick\"",
-					"\"$(SRCROOT)/Nu/libfftw\"",
-					"\"$(SRCROOT)/Nu/Chipmunk/include/chipmunk\"",
 				);
 				INFOPLIST_FILE = "Nu/SoleDjVu-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Nu/ad/GoogleAdMobAdsSdkiOS-6.0.1\"",
-					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/Nu/ChipmunkPro-iPhone-Trial\"",
-					"\"$(SRCROOT)/Nu/libfftw\"",
-					"\"$(SRCROOT)/Nu/libmagick\"",
-					"\"$(SRCROOT)/Nu/libpng\"",
-					"\"$(SRCROOT)/Nu/libjpeg\"",
-					"\"$(SRCROOT)/Nu/libtiff\"",
-					"\"$(SRCROOT)/Nu/libdjvu\"",
+					"\"$(SRCROOT)/../png/libpng\"",
+					"\"$(SRCROOT)/../jpeg/libjpeg\"",
+					"\"$(SRCROOT)/../tiff/libtiff\"",
+					"\"$(SRCROOT)/../djvu/libdjvu\"",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = SoleDjVu;
-				SUPPORTED_PLATFORMS = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -602,27 +580,19 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nu/SoleDjVu-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/Nu/libmagick\"",
-					"\"$(SRCROOT)/Nu/libfftw\"",
-					"\"$(SRCROOT)/Nu/Chipmunk/include/chipmunk\"",
 				);
 				INFOPLIST_FILE = "Nu/SoleDjVu-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Nu/ad/GoogleAdMobAdsSdkiOS-6.0.1\"",
-					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/Nu/ChipmunkPro-iPhone-Trial\"",
-					"\"$(SRCROOT)/Nu/libfftw\"",
-					"\"$(SRCROOT)/Nu/libmagick\"",
-					"\"$(SRCROOT)/Nu/libpng\"",
-					"\"$(SRCROOT)/Nu/libjpeg\"",
-					"\"$(SRCROOT)/Nu/libtiff\"",
-					"\"$(SRCROOT)/Nu/libdjvu\"",
+					"\"$(SRCROOT)/../png/libpng\"",
+					"\"$(SRCROOT)/../jpeg/libjpeg\"",
+					"\"$(SRCROOT)/../tiff/libtiff\"",
+					"\"$(SRCROOT)/../djvu/libdjvu\"",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = SoleDjVu;
-				SUPPORTED_PLATFORMS = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Distribution;
