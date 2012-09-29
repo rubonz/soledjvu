@@ -71,6 +71,10 @@
 #import "ccTypes.h"
 #endif
 
+#import <CoreLocation/CoreLocation.h>
+#import <MapKit/MapKit.h>
+//#import "ObjectiveChipmunk.h"
+
 #define IS_NOT_NULL(xyz) ((xyz) && (((id) (xyz)) != Nu__null))
 
 // We'd like for this to be in the ObjC2 API, but it isn't.
@@ -93,6 +97,52 @@ static void *value_buffer_for_objc_type(const char *typeString);
 static NSString *signature_for_identifier(NuCell *cell, NuSymbolTable *symbolTable);
 static id help_add_method_to_class(Class classToExtend, id cdr, NSMutableDictionary *context, BOOL addClassMethod);
 static size_t size_of_objc_type(const char *typeString);
+
+NuCell *new_nu_cell(id obj)
+{
+    NuCell *cell = [[[NuCell alloc] init] autorelease];
+    [cell setCar:obj];
+    return cell;
+}
+
+NuCell *nu_cell_cons(NuCell *lst, id obj)
+{
+    NuCell *cdr = new_nu_cell(obj);
+    [lst setCdr:cdr];
+    return cdr;
+}
+
+NuCell *nu_cell_cons_uint8(NuCell *lst, uint8_t val)
+{
+    return nu_cell_cons(lst, [NSNumber numberWithUnsignedInt:val]);
+}
+
+NuCell *nu_cell_cons_uint16(NuCell *lst, uint16_t val)
+{
+    return nu_cell_cons(lst, [NSNumber numberWithUnsignedInt:val]);
+}
+
+NuCell *nu_cell_cons_uint32(NuCell *lst, uint32_t val)
+{
+    return nu_cell_cons(lst, [NSNumber numberWithUnsignedInt:val]);
+}
+
+NuCell *nu_cell_cons_str(NuCell *lst, char *str)
+{
+    return nu_cell_cons(lst, [NSString stringWithCString:str encoding:NSASCIIStringEncoding]);
+}
+
+NuCell *nu_cell_cons_float(NuCell *lst, float val)
+{
+    return nu_cell_cons(lst, [NSNumber numberWithFloat:val]);
+}
+
+NuCell *nu_cell_cons_double(NuCell *lst, double val)
+{
+    return nu_cell_cons(lst, [NSNumber numberWithDouble:val]);
+}
+
+
 
 #pragma mark - NuHandler.h
 
@@ -724,6 +774,11 @@ id _nulist(id firstObject, ...)
     return [self callWithArguments:cdr context:calling_context];
 }
 
+- (id) evalWithArguments:(id)cdr
+{
+    return [self callWithArguments:cdr context:Nu__null];
+}
+
 static id getObjectFromContext(id context, id symbol)
 {
     while (IS_NOT_NULL(context)) {
@@ -902,6 +957,10 @@ static NSMutableDictionary *nu_block_table = nil;
 
 #define CGSIZE_SIGNATURE "{CGSize=ff}"
 #endif
+#define CLLOCATIONCOORDINATE2D_SIGNATURE "{?=dd}"
+#define MKCOORDINATEREGION_SIGNATURE "{?={?=dd}{?=dd}}"
+#define FFI_FF_SIGNATURE "{?=ff}"
+#define FFI_FFFF_SIGNATURE "{?=ffff}"
 #define CCCOLOR3B_SIGNATURE "{_ccColor3B=CCC}"
 
 // private ffi types
@@ -911,6 +970,10 @@ static ffi_type ffi_type_nssize;
 static ffi_type ffi_type_nsrect;
 static ffi_type ffi_type_nsrange;
 static ffi_type ffi_type_cccolor3b;
+static ffi_type ffi_type_cllocationcoordinate2d;
+static ffi_type ffi_type_mkcoordinateregion;
+static ffi_type ffi_type_ff;
+static ffi_type ffi_type_ffff;
 
 static void initialize_ffi_types(void)
 {
@@ -967,10 +1030,43 @@ static void initialize_ffi_types(void)
     ffi_type_cccolor3b.size = 0;
     ffi_type_cccolor3b.alignment = 0;
     ffi_type_cccolor3b.type = FFI_TYPE_STRUCT;
-    ffi_type_cccolor3b.elements = malloc(3 * sizeof(ffi_type*));
+    ffi_type_cccolor3b.elements = malloc(4 * sizeof(ffi_type*));
     ffi_type_cccolor3b.elements[0] = &ffi_type_uchar;
     ffi_type_cccolor3b.elements[1] = &ffi_type_uchar;
     ffi_type_cccolor3b.elements[2] = &ffi_type_uchar;
+    ffi_type_cccolor3b.elements[3] = NULL;
+    ffi_type_cllocationcoordinate2d.size = 0;
+    ffi_type_cllocationcoordinate2d.alignment = 0;
+    ffi_type_cllocationcoordinate2d.type = FFI_TYPE_STRUCT;
+    ffi_type_cllocationcoordinate2d.elements = malloc(3 * sizeof(ffi_type*));
+    ffi_type_cllocationcoordinate2d.elements[0] = &ffi_type_double;
+    ffi_type_cllocationcoordinate2d.elements[1] = &ffi_type_double;
+    ffi_type_cllocationcoordinate2d.elements[2] = NULL;
+    ffi_type_mkcoordinateregion.size = 0;
+    ffi_type_mkcoordinateregion.alignment = 0;
+    ffi_type_mkcoordinateregion.type = FFI_TYPE_STRUCT;
+    ffi_type_mkcoordinateregion.elements = malloc(5 * sizeof(ffi_type*));
+    ffi_type_mkcoordinateregion.elements[0] = &ffi_type_double;
+    ffi_type_mkcoordinateregion.elements[1] = &ffi_type_double;
+    ffi_type_mkcoordinateregion.elements[2] = &ffi_type_double;
+    ffi_type_mkcoordinateregion.elements[3] = &ffi_type_double;
+    ffi_type_mkcoordinateregion.elements[4] = NULL;
+    ffi_type_ff.size = 0;
+    ffi_type_ff.alignment = 0;
+    ffi_type_ff.type = FFI_TYPE_STRUCT;
+    ffi_type_ff.elements = malloc(3 * sizeof(ffi_type*));
+    ffi_type_ff.elements[0] = &ffi_type_float;
+    ffi_type_ff.elements[1] = &ffi_type_float;
+    ffi_type_ff.elements[2] = NULL;
+    ffi_type_ffff.size = 0;
+    ffi_type_ffff.alignment = 0;
+    ffi_type_ffff.type = FFI_TYPE_STRUCT;
+    ffi_type_ffff.elements = malloc(5 * sizeof(ffi_type*));
+    ffi_type_ffff.elements[0] = &ffi_type_float;
+    ffi_type_ffff.elements[1] = &ffi_type_float;
+    ffi_type_ffff.elements[2] = &ffi_type_float;
+    ffi_type_ffff.elements[3] = &ffi_type_float;
+    ffi_type_ffff.elements[4] = NULL;
 }
 
 static char get_typeChar_from_typeString(const char *typeString)
@@ -1061,6 +1157,30 @@ static ffi_type *ffi_type_for_objc_type(const char *typeString)
                 if (!initialized_ffi_types) initialize_ffi_types();
                 return &ffi_type_cccolor3b;
             }
+            else if (
+                     !strcmp(typeString, CLLOCATIONCOORDINATE2D_SIGNATURE)
+                     ) {
+                if (!initialized_ffi_types) initialize_ffi_types();
+                return &ffi_type_cllocationcoordinate2d;
+            }
+            else if (
+                     !strcmp(typeString, MKCOORDINATEREGION_SIGNATURE)
+                     ) {
+                if (!initialized_ffi_types) initialize_ffi_types();
+                return &ffi_type_mkcoordinateregion;
+            }
+            else if (
+                     !strcmp(typeString, FFI_FF_SIGNATURE)
+                     ) {
+                if (!initialized_ffi_types) initialize_ffi_types();
+                return &ffi_type_ff;
+            }
+            else if (
+                     !strcmp(typeString, FFI_FFFF_SIGNATURE)
+                     ) {
+                if (!initialized_ffi_types) initialize_ffi_types();
+                return &ffi_type_ffff;
+            }
             else {
                 NSLog(@"unknown type identifier %s", typeString);
                 return &ffi_type_void;
@@ -1137,6 +1257,26 @@ static size_t size_of_objc_type(const char *typeString)
                 return sizeof(ccColor3B);
             }
 #endif
+            else if (
+                     !strcmp(typeString, CLLOCATIONCOORDINATE2D_SIGNATURE)
+                     ) {
+                return sizeof(CLLocationCoordinate2D);
+            }
+            else if (
+                     !strcmp(typeString, MKCOORDINATEREGION_SIGNATURE)
+                     ) {
+                return sizeof(MKCoordinateRegion);
+            }
+            else if (
+                     !strcmp(typeString, FFI_FF_SIGNATURE)
+                     ) {
+                return sizeof(float)*2;
+            }
+            else if (
+                     !strcmp(typeString, FFI_FFFF_SIGNATURE)
+                     ) {
+                return sizeof(float)*4;
+            }
             else {
                 NSLog(@"unknown type identifier %s", typeString);
                 return sizeof (void *);
@@ -1213,6 +1353,26 @@ static void *value_buffer_for_objc_type(const char *typeString)
                 return malloc(sizeof(ccColor3B));
             }
 #endif
+            else if (
+                     !strcmp(typeString, CLLOCATIONCOORDINATE2D_SIGNATURE)
+                     ) {
+                return malloc(sizeof(CLLocationCoordinate2D));
+            }
+            else if (
+                     !strcmp(typeString, MKCOORDINATEREGION_SIGNATURE)
+                     ) {
+                return malloc(sizeof(MKCoordinateRegion));
+            }
+            else if (
+                     !strcmp(typeString, FFI_FF_SIGNATURE)
+                     ) {
+                return malloc(sizeof(float)*2);
+            }
+            else if (
+                     !strcmp(typeString, FFI_FFFF_SIGNATURE)
+                     ) {
+                return malloc(sizeof(float)*4);
+            }
             else {
                 NSLog(@"unknown type identifier %s", typeString);
                 return malloc(sizeof (void *));
@@ -1438,6 +1598,46 @@ static int set_objc_value_from_nu_value(void *objc_value, id nu_value, const cha
                 return NO;
             }
 #endif
+            else if (
+                     !strcmp(typeString, CLLOCATIONCOORDINATE2D_SIGNATURE)
+                     ) {
+                CLLocationCoordinate2D *loc = (CLLocationCoordinate2D *) objc_value;
+                id cursor = nu_value;
+                loc->latitude = [[cursor car] doubleValue];     cursor = [cursor cdr];;
+                loc->longitude = [[cursor car] doubleValue];
+                return NO;
+            }
+            else if (
+                     !strcmp(typeString, MKCOORDINATEREGION_SIGNATURE)
+                     ) {
+                MKCoordinateRegion *region = (MKCoordinateRegion *) objc_value;
+                id cursor = nu_value;
+                region->center.latitude = [[cursor car] doubleValue];   cursor = [cursor cdr];;
+                region->center.longitude = [[cursor car] doubleValue];  cursor = [cursor cdr];;
+                region->span.latitudeDelta = [[cursor car] doubleValue];    cursor = [cursor cdr];;
+                region->span.longitudeDelta = [[cursor car] doubleValue];
+                return NO;
+            }
+            else if (
+                     !strcmp(typeString, FFI_FF_SIGNATURE)
+                     ) {
+                float *val = (float *) objc_value;
+                id cursor = nu_value;
+                val[0] = [[cursor car] floatValue]; cursor = [cursor cdr];;
+                val[1] = [[cursor car] floatValue];
+                return NO;
+            }
+            else if (
+                     !strcmp(typeString, FFI_FFFF_SIGNATURE)
+                     ) {
+                float *val = (float *) objc_value;
+                id cursor = nu_value;
+                val[0] = [[cursor car] floatValue]; cursor = [cursor cdr];;
+                val[1] = [[cursor car] floatValue]; cursor = [cursor cdr];;
+                val[2] = [[cursor car] floatValue]; cursor = [cursor cdr];;
+                val[3] = [[cursor car] floatValue];
+                return NO;
+            }
             else {
                 NSLog(@"UNIMPLEMENTED: can't wrap structure of type %s", typeString);
                 return NO;
@@ -1679,6 +1879,56 @@ static id get_nu_value_from_objc_value(void *objc_value, const char *typeString)
                 return list;
             }
 #endif
+            else if (
+                     !strcmp(typeString, CLLOCATIONCOORDINATE2D_SIGNATURE)
+                     ) {
+                CLLocationCoordinate2D *loc = (CLLocationCoordinate2D *) objc_value;
+                NuCell *list = [[[NuCell alloc] init] autorelease];
+                id cursor = list;
+                [cursor setCar:[NSNumber numberWithDouble:loc->latitude]];
+                [cursor setCdr:[[[NuCell alloc] init] autorelease]];
+                cursor = [cursor cdr];
+                [cursor setCar:[NSNumber numberWithDouble:loc->longitude]];
+                return list;
+            }
+            else if (
+                     !strcmp(typeString, MKCOORDINATEREGION_SIGNATURE)
+                     ) {
+                MKCoordinateRegion *region = (MKCoordinateRegion *) objc_value;
+                NuCell *list = [[[NuCell alloc] init] autorelease];
+                id cursor = list;
+                [cursor setCar:[NSNumber numberWithDouble:region->center.latitude]];
+                [cursor setCdr:[[[NuCell alloc] init] autorelease]];
+                cursor = [cursor cdr];
+                [cursor setCar:[NSNumber numberWithDouble:region->center.longitude]];
+                [cursor setCdr:[[[NuCell alloc] init] autorelease]];
+                cursor = [cursor cdr];
+                [cursor setCar:[NSNumber numberWithDouble:region->span.latitudeDelta]];
+                [cursor setCdr:[[[NuCell alloc] init] autorelease]];
+                cursor = [cursor cdr];
+                [cursor setCar:[NSNumber numberWithDouble:region->span.longitudeDelta]];
+                return list;
+            }            
+            else if (
+                     !strcmp(typeString, FFI_FF_SIGNATURE)
+                     ) {
+                float *val = (float *) objc_value;
+                NuCell *lst, *cursor;
+                lst = cursor = nu_cell_cons_float(nil, val[0]);
+                cursor = nu_cell_cons_float(cursor, val[1]);
+                return lst;
+            }                
+            else if (
+                     !strcmp(typeString, FFI_FFFF_SIGNATURE)
+                     ) {
+                float *val = (float *) objc_value;
+                NuCell *lst, *cursor;
+                lst = cursor = nu_cell_cons_float(nil, val[0]);
+                cursor = nu_cell_cons_float(cursor, val[1]);
+                cursor = nu_cell_cons_float(cursor, val[2]);
+                cursor = nu_cell_cons_float(cursor, val[3]);
+                return lst;
+            }
             else {
                 NSLog(@"UNIMPLEMENTED: can't wrap structure of type %s", typeString);
             }
@@ -2109,6 +2359,14 @@ static id add_method_to_class(Class c, NSString *methodName, NSString *signature
     free(name);
     free(signature);
     [super dealloc];
+}
+
+- (NuBridgedFunction *) initWithStaticFunction:(void *)fn name:(char *)n signature:(char *)s
+{
+    function = fn;
+    name = strdup(n);
+    signature = strdup(s);
+    return self;
 }
 
 - (NuBridgedFunction *) initWithName:(NSString *)n signature:(NSString *)s
@@ -11070,3 +11328,5 @@ static int deallocationCount = 0;
 }
 
 @end
+
+    

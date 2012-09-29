@@ -261,6 +261,7 @@
 - (NSMutableDictionary *) context;
 /*! Evaluate a block using the specified arguments and calling context. */
 - (id) evalWithArguments:(id)cdr context:(NSMutableDictionary *)calling_context;
+- (id) evalWithArguments:(id)cdr;
 /*! Evaluate a block using the specified arguments, calling context, and owner.
  This is the mechanism used to evaluate blocks as methods. */
 - (id) evalWithArguments:(id)cdr context:(NSMutableDictionary *)calling_context self:(id)object;
@@ -418,6 +419,8 @@
  But in practice, this has not been much of a problem.
  */
 @interface NuBridgedFunction : NuOperator
+
+- (NuBridgedFunction *) initWithStaticFunction:(void *)fn name:(char *)n signature:(char *)s;
 
 /*! Create a wrapper for a C function with the specified name and signature.
  The function is looked up using the <b>dlsym()</b> function and the wrapper is
@@ -1272,3 +1275,12 @@ id _nuregex(const unsigned char *pattern, int options);
 id _nuregex_with_length(const unsigned char *pattern, int length, int options);
 id _nulist(id firstObject,...);
 id _nudata(const void *bytes, int length);
+
+NuCell *new_nu_cell(id obj);
+NuCell *nu_cell_cons(NuCell *lst, id obj);
+NuCell *nu_cell_cons_uint8(NuCell *lst, uint8_t val);
+NuCell *nu_cell_cons_uint16(NuCell *lst, uint16_t val);
+NuCell *nu_cell_cons_uint32(NuCell *lst, uint32_t val);
+NuCell *nu_cell_cons_str(NuCell *lst, char *str);
+NuCell *nu_cell_cons_float(NuCell *lst, float val);
+NuCell *nu_cell_cons_double(NuCell *lst, double val);

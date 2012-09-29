@@ -1,47 +1,49 @@
-//  SoleDjVu
-//  http://soleapps.com/soleapps/soledjvu/
 //
-//  Copyright (c) 2012 Arthur Choung. All rights reserved.
+//  Glue.m
+//  NuMagick
 //
-//  This program is free software; you can redistribute it and/or
-//  modify it under the terms of the GNU General Public License
-//  as published by the Free Software Foundation; either version 2
-//  of the License, or (at your option) any later version.
-//  
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU General Public License for more details.
-//  
-//  You should have received a copy of the GNU General Public License
-//  along with this program; if not, write to the Free Software
-//  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+//  Created by arthur on 12/04/12.
+//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "Glue.h"
+#import "Nu.h"
 #import "TCPServer.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define M_PI   3.14159265358979323846264338327950288   
 #define DEG_TO_RADIANS(angle) (angle / 180.0 * M_PI)
 
+@class MagickGlue;
+
+@interface Glue : NSObject
+@end
+
 @implementation Glue
 
-+ (void)animateWithDuration:(NSTimeInterval)duration animations:(id)code
+//+ (int)magickConvert:(id)lst { return [MagickGlue convert:lst]; }
+
++ (UIWebView *)UIWebView:(CGRect)r { return [[[UIWebView alloc] initWithFrame:r] autorelease]; }
+
++ (void)animateWithDuration:(NSTimeInterval)duration block:(NuBlock *)block
 {
-    [UIView animateWithDuration:duration animations:^{[[TCPServer global] eval:code];}];
+    [UIView animateWithDuration:duration animations:^{[block evalWithArguments:[NSNull null] context:[[Nu sharedParser] context]];}];
 }
 
-+ (void)scaleImage
++ (void)scaleImage:(id)lst
 {
-    NSArray *arr = [[TCPServer global] taskObject];
-    UIImage *orig = [arr objectAtIndex:0];
-    NSString *path = [arr objectAtIndex:1];
+    UIImage *orig = [lst objectAtIndex:0];
+    NSString *path = [lst objectAtIndex:1];
+    NSNumber *pixels = [lst objectAtIndex:2];
+    [Glue scaleImage:orig path:path pixels:[pixels intValue]];
+}
+
++ (void)scaleImage:(UIImage *)orig path:(NSString *)path pixels:(int)pixels
+{
     CGSize origSize = [orig size];
-    if ((origSize.width <= 512) && (origSize.height <= 512)) {
+    if ((origSize.width <= pixels) && (origSize.height <= pixels)) {
         [Glue writeImage:orig path:path];
     } else {
-        CGSize newSize = [Glue proportionalSize:[orig size] maxSize:CGSizeMake(512, 512)];
+        CGSize newSize = [Glue proportionalSize:[orig size] maxSize:CGSizeMake(pixels, pixels)];
         UIImage *scale = [Glue scaleImage:orig toSize:newSize];
         [Glue writeImage:scale path:path];
     }
@@ -109,6 +111,13 @@
     return CGSizeMake(tmp_width, tmp_height);
 }
 
++ (void)writeImage:(id)lst
+{
+    UIImage *image = [lst objectAtIndex:0];
+    NSString *path = [lst objectAtIndex:1];
+    [Glue writeImage:image path:path];
+}
+
 + (void)writeImage:(UIImage *)image path:(NSString *)path
 {
     [UIImagePNGRepresentation(image) writeToFile:path atomically:YES];
@@ -162,18 +171,38 @@ static UIFont *fontWithName(NSString *fontName, NSString *str, CGSize fits)
     }
 }
 
-+ (UIImage *)imageWithEmoji:(NSString *)str size:(CGSize)size
++ (UIImage *)imageWithString:(NSString *)str font:(UIFont *)font
 {
-    UIFont *font = fontWithName(@"AppleColorEmoji", str, size);
+    CGSize size = [str sizeWithFont:font];
     UIGraphicsBeginImageContextWithOptions(size, NO, 0.0);
     /*    CGContextRef context = UIGraphicsGetCurrentContext();
      [[UIColor colorWithRed:0.875 green:0.875 blue:0.5 alpha:1.0] set];
      CGContextFillRect(context, CGRectMake(0.0, 0.0, size.width, size.height));*/
-    CGSize pileOfPooSize = [str sizeWithFont:font];
-    [str drawInRect:CGRectMake((size.width-pileOfPooSize.width)/2.0, (size.height-pileOfPooSize.height)/2.0, pileOfPooSize.width, pileOfPooSize.height) withFont:font];
+    [[UIColor whiteColor] set];
+    [str drawInRect:CGRectMake(0, 0, size.width, size.height) withFont:font];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return image;
+}
+
++ (UIImage *)imageWithString:(NSString *)str font:(UIFont *)font size:(CGSize)size
+{
+    UIGraphicsBeginImageContextWithOptions(size, NO, 0.0);
+    /*    CGContextRef context = UIGraphicsGetCurrentContext();
+     [[UIColor colorWithRed:0.875 green:0.875 blue:0.5 alpha:1.0] set];
+     CGContextFillRect(context, CGRectMake(0.0, 0.0, size.width, size.height));*/
+    CGSize textSize = [str sizeWithFont:font];
+    [[UIColor whiteColor] set];
+    [str drawInRect:CGRectMake((size.width-textSize.width)/2.0, (size.height-textSize.height)/2.0, textSize.width, textSize.height) withFont:font];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
+
++ (UIImage *)imageWithEmoji:(NSString *)str size:(CGSize)size
+{
+    UIFont *font = fontWithName(@"AppleColorEmoji", str, size);
+    return [Glue imageWithString:str font:font size:size];
 }
 
 + (NSString *)unicodeForPileOfPoo { return @"\ue05a"; }

@@ -4,7 +4,7 @@ SoleDjVu
 
 License: GPLv2
 
-DjVu document reader for iPad, iPhone, and iPod Touch.
+DjVu iPad document reader. Also works with iPhone and iPod Touch.
 
 Arthur Choung
 - <http://djvuipad.com>
