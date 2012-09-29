@@ -508,8 +508,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nu/SoleDjVu-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Nu/SoleDjVu-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -533,8 +532,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nu/SoleDjVu-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Nu/SoleDjVu-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -579,8 +577,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nu/SoleDjVu-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Nu/SoleDjVu-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
