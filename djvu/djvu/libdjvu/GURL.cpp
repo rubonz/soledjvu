@@ -1379,7 +1379,7 @@ GURL::NativeFilename(void) const
 static int
 urlstat(const GURL &url,struct stat &buf)
 {
-  return ::stat(url.NativeFilename(),&buf);
+  return ::stat(url.UTF8Filename(),&buf);
 }
 #endif
 
@@ -1506,7 +1506,7 @@ GURL::follow_symlinks(void) const
   struct stat buf;
   while ( (urlstat(ret, buf) >= 0) &&
           (buf.st_mode & S_IFLNK) &&
-          ((lnklen = readlink(ret.NativeFilename(),lnkbuf,sizeof(lnkbuf))) > 0) )
+          ((lnklen = readlink(ret.UTF8Filename(),lnkbuf,sizeof(lnkbuf))) > 0) )
     {
       lnkbuf[lnklen] = 0;
       GNativeString lnk(lnkbuf);
@@ -1532,7 +1532,7 @@ GURL::mkdir() const
       if (is_dir())
         retval = 0;
       else 
-        retval = ::mkdir(NativeFilename(), 0755);
+        retval = ::mkdir(UTF8Filename(), 0755);
 #elif defined(WIN32)
       if (is_dir())
         retval = 0;
@@ -1556,9 +1556,9 @@ GURL::deletefile(void) const
     {
 #if defined(UNIX)
       if (is_dir())
-        retval = ::rmdir(NativeFilename());
+        retval = ::rmdir(UTF8Filename());
       else
-        retval = ::unlink(NativeFilename());
+        retval = ::unlink(UTF8Filename());
 #elif defined(WIN32)
       if (is_dir())
         retval = ::RemoveDirectoryA(NativeFilename());
@@ -1578,7 +1578,7 @@ GURL::listdir(void) const
   if(is_dir())
   {
 #if defined(UNIX) || defined(OS2)
-    DIR * dir=opendir(NativeFilename());//MBCS cvt
+    DIR * dir=opendir(UTF8Filename());//MBCS cvt
     for(dirent *de=readdir(dir);de;de=readdir(dir))
     {
       const int len = NAMLEN(de);
@@ -1646,7 +1646,7 @@ int
 GURL::renameto(const GURL &newurl) const
 {
   if (is_local_file_url() && newurl.is_local_file_url())
-    return rename(NativeFilename(),newurl.NativeFilename());
+    return rename(UTF8Filename(),newurl.UTF8Filename());
   return -1;
 }
 

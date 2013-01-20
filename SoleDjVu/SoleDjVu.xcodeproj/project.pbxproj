@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E212F7A16ABF818006135F5 /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E212F7916ABF818006135F5 /* Image.m */; };
 		8EA120E0154D76DA00F80BA4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EA120DF154D76DA00F80BA4 /* UIKit.framework */; };
 		8EA120E2154D76DA00F80BA4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EA120E1154D76DA00F80BA4 /* Foundation.framework */; };
 		8EA120E4154D76DA00F80BA4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EA120E3154D76DA00F80BA4 /* CoreGraphics.framework */; };
@@ -31,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8E212F7916ABF818006135F5 /* Image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Image.m; sourceTree = "<group>"; };
 		8EA120DB154D76DA00F80BA4 /* SoleDjVu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoleDjVu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EA120DF154D76DA00F80BA4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8EA120E1154D76DA00F80BA4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -213,6 +215,7 @@
 				8EA1252C154D79E900F80BA4 /* Nu.h */,
 				8EA1252D154D79E900F80BA4 /* Nu.m */,
 				8EA1252E154D79E900F80BA4 /* rom.c */,
+				8E212F7916ABF818006135F5 /* Image.m */,
 				8EA1252F154D79E900F80BA4 /* TCPServer.h */,
 				8EA12530154D79E900F80BA4 /* TCPServer.m */,
 				8EE959FF156EA02400D2EA15 /* DjvuGlue.mm */,
@@ -437,6 +440,7 @@
 				8EA1282C154D79EA00F80BA4 /* rom.c in Sources */,
 				8EA1282D154D79EA00F80BA4 /* TCPServer.m in Sources */,
 				8EE95A00156EA02400D2EA15 /* DjvuGlue.mm in Sources */,
+				8E212F7A16ABF818006135F5 /* Image.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -504,8 +508,8 @@
 		8EA120F4154D76DA00F80BA4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nu/SoleDjVu-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
@@ -520,6 +524,8 @@
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = SoleDjVu;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				WRAPPER_EXTENSION = app;
 			};
@@ -528,8 +534,8 @@
 		8EA120F5154D76DA00F80BA4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nu/SoleDjVu-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
@@ -544,6 +550,8 @@
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = SoleDjVu;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				WRAPPER_EXTENSION = app;
 			};
@@ -573,8 +581,8 @@
 		8EDC332A15763EF100579FB9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nu/SoleDjVu-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
@@ -589,6 +597,8 @@
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = SoleDjVu;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				WRAPPER_EXTENSION = app;
 			};

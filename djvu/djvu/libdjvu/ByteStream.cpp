@@ -667,7 +667,7 @@ urlfopen(const GURL &url,const char mode[])
   }
   return retval?retval:fopen((const char *)url.NativeFilename(),mode);
 #else
-  return fopen((const char *)url.NativeFilename(),mode);
+  return fopen((const char *)url.UTF8Filename(),mode);
 #endif
 }
 
@@ -675,7 +675,7 @@ urlfopen(const GURL &url,const char mode[])
 static int
 urlopen(const GURL &url, const int mode, const int perm)
 {
-  return open((const char *)url.NativeFilename(),mode,perm);
+  return open((const char *)url.UTF8Filename(),mode,perm);
 }
 #endif /* UNIX */
 
